@@ -1,9 +1,4 @@
 class Data:
-    valid_login = 'Kosmo2020'
-    valid_password = '1234'
-    valid_name = 'Kosmo'
-    valid_courier = {'login': 'Kosmo2020', 'password': '1234', 'name': 'Kosmo'}
-    no_name_courier = {'login': 'Kosmo2020', 'password': '1234'}
     wrong_password = {'login': 'Kosmo2020', 'password': '123456789'}
 
     Url_main_page = 'https://qa-scooter.praktikum-services.ru/'
@@ -58,3 +53,10 @@ class OrderData:
         'comment': 'Гарри, подожди, а как же я!!',
         'color': []
     }
+
+class ResponseRequestMessage:
+    account_not_found = 'Учетная запись не найдена'
+    not_enough_to_login = "Недостаточно данных для входа"
+    not_enough_to_create_account = 'Недостаточно данных для создания учетной записи'
+    login_is_used = 'Этот логин уже используется. Попробуйте другой.'
+    success_registration = '{"ok":true}'
