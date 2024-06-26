@@ -17,4 +17,4 @@ class TestNewOrder:
     def test_new_order(self, order):
         orders = json.dumps(order)
         response = requests.post(Data.Url_create_order, data=orders)
-        assert response.status_code == 201, 'track' in response.text
+        assert response.status_code == 201 and 'track' in response.text

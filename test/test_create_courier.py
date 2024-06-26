@@ -16,7 +16,7 @@ class TestCreateCourier:
             'name': create_random_courier_name()
         }
         response = requests.post(Data.Url_create_courier, data=payload)
-        assert response.status_code == 201, response.json() == ResponseRequestMessage.success_registration
+        assert response.status_code == 201 and response.json() == {'ok':True}
 
     @allure.title('Проверка создания курьера с логином, который уже есть')
     @allure.description('Проверяем, что код ответа 409')
@@ -24,7 +24,7 @@ class TestCreateCourier:
         payload = generate_new_courier
         requests.post(Data.Url_create_courier, data=payload)
         response = requests.post(Data.Url_create_courier, data=payload)
-        assert response.status_code == 409, response.json() == ResponseRequestMessage.login_is_used
+        assert response.status_code == 409 and response.json()['message'] == ResponseRequestMessage.login_is_used
 
     @allure.title('Проверка создания курьера, если обязательные поля не заполнены')
     @allure.description('Передаем данные с пустым логином и паролем(поочередно). Проверяем, что код ответа 400')
@@ -34,4 +34,8 @@ class TestCreateCourier:
     ])
     def test_create_courier_with_empty_fields(self, empty_fields):
         response = requests.post(Data.Url_create_courier, data=empty_fields)
-        assert response.status_code == 400, response.json() == ResponseRequestMessage.not_enough_to_create_account
+        assert response.status_code == 400 and response.json()['message'] == ResponseRequestMessage.not_enough_to_create_account
+
+    @classmethod
+    def teardown_class(cls):
+        cls.response = requests.delete(Data.Url_create_courier)

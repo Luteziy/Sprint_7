@@ -21,7 +21,7 @@ class TestCourierLogin:
     ])
     def test_courier_login_no_valid_data(self, wrong_pass):
         response = requests.post(Data.Url_create_login, data=wrong_pass)
-        assert response.status_code == 404, response.json() == ResponseRequestMessage.account_not_found
+        assert response.status_code == 404 and response.json()['message'] == ResponseRequestMessage.account_not_found
 
     @allure.title('Проверка ошибки авторизации курьера, при незаполненных полях логина и пароля')
     @allure.description('Код ответа 400')
@@ -31,4 +31,8 @@ class TestCourierLogin:
     ])
     def test_courier_login_no_valid_data(self, empty):
         response = requests.post(Data.Url_create_login, data=empty)
-        assert response.status_code == 400, response.json() == ResponseRequestMessage.not_enough_to_login
+        assert response.status_code == 400 and response.json()['message'] == ResponseRequestMessage.not_enough_to_login
+
+    @classmethod
+    def teardown_class(cls):
+        cls.response = requests.delete(Data.Url_create_login)
